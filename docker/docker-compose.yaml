@@ -1,0 +1,24 @@
+services:
+  mongo-auth:
+    image: mongo
+    container_name: mongo-auth
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=passadmin
+    volumes:
+      - mongo-auth:/persist/auth
+    expose:
+      - 27017
+    ports:
+      - "27017:27017"
+    restart: on-failure
+
+  api-auth:
+    build: ../
+    container_name: api-auth
+    ports:
+      - "8080:8080"
+
+
+volumes:
+  mongo-auth:
