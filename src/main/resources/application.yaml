@@ -12,3 +12,6 @@ spring:
   profiles:
     active: docker
 
+auth:
+  token:
+    secret: ${AUTH_TOKEN_AES256_KEY}

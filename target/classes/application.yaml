@@ -1,3 +1,12 @@
 spring:
   application:
     name: auth
+  data:
+    mongodb:
+      host: mongo-auth
+      port: 27017
+      username: admin
+      password: passadmin
+      authentication-database: admin
+      database: authdb
+
