@@ -1,6 +1,7 @@
 package imt.fisa.auth.services.authentication;
 
 
+import imt.fisa.auth.exception.InvalidCredentialsException;
 import imt.fisa.auth.persistence.dto.UserEntity;
 import imt.fisa.auth.persistence.repositories.UserRepository;
 import imt.fisa.auth.services.crypto.TokenService;
@@ -24,12 +25,13 @@ public class AuthService {
     public String getAuthorizationToken(String identifiant, String password){
         //retourne un token d'autorisation qui sera utilisé par les autres APIs.
         //Si un token non expiré associé à l'utilisateur existe en bdd : on refresh ce token et le renvoie
-
+        System.out.println("[*] AuthService::getAuthorizationToken called for user "+identifiant);
         Optional<UserEntity> userEntiy = userRepository.findByIdentifiantAndPassword(identifiant, password);
         if(userEntiy.isEmpty()){
-            throw new RuntimeException("Identifiant ou password incorrect.");
+            System.out.println("[!] AuthService::getAuthorizationToken invalid credentials for user "+identifiant);
+            throw new InvalidCredentialsException("Identifiant ou password incorrect.");
         }
-
+        System.out.println("[*] AuthService::getAuthorizationToken user "+identifiant+" authenticated successfully.");
         String nouveauToken = generateToken(identifiant);
         userEntiy.get().setToken(nouveauToken);
         userRepository.save(userEntiy.get());
