@@ -6,7 +6,7 @@ set -e
 if [ -z "$AUTH_TOKEN_AES256_KEY" ]; then
   AUTH_TOKEN_AES256_KEY=$(openssl rand -base64 32)
   export AUTH_TOKEN_AES256_KEY
-  echo "[*] Clé AUTH_TOKEN_AES256_KEY générée au démarrage du conteneur"
+  echo "[*] Clé AUTH_TOKEN_AES256_KEY générée au démarrage du conteneur : $AUTH_TOKEN_AES256_KEY"
 fi
 
 exec java -Dspring.profiles.active=docker -jar app.jar

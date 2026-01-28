@@ -3,13 +3,15 @@ package imt.fisa.auth.persistence.dto;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@Document(collection = "user")
+import java.time.LocalDateTime;
+
+@Document(collection = "users")
 public class UserEntity {
     @MongoId
     private String identifiant;
     private String password;
     private String token;
-
+    private LocalDateTime tokenExpirationTime;
 
     public String getIdentifiant() {
         return identifiant;
@@ -27,11 +29,17 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getToken() {
-        return token;
-    }
+    public String getToken() {return token; }
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public LocalDateTime getTokenExpirationTime() {
+        return tokenExpirationTime;
+    }
+
+    public void setTokenExpirationTime(LocalDateTime tokenExpirationTime) {
+        this.tokenExpirationTime = tokenExpirationTime;
     }
 }

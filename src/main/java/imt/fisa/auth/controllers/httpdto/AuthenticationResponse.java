@@ -1,4 +1,4 @@
-package imt.fisa.auth.persistence.dto;
+package imt.fisa.auth.controllers.httpdto;
 
 public class AuthenticationResponse {
     private String token;

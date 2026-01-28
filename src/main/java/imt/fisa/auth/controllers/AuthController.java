@@ -1,35 +1,44 @@
 package imt.fisa.auth.controllers;
 
-import imt.fisa.auth.persistence.dto.AuthenticationRequest;
-import imt.fisa.auth.persistence.dto.AuthenticationResponse;
-import imt.fisa.auth.services.authentication.AuthService;
-import org.springframework.http.MediaType;
+import imt.fisa.auth.controllers.httpdto.AuthenticationRequest;
+import imt.fisa.auth.controllers.httpdto.AuthenticationResponse;
+import imt.fisa.auth.controllers.httpdto.AuthorizationResponse;
+import imt.fisa.auth.services.authentication.AuthenticationService;
+import imt.fisa.auth.services.authorization.AuthorizationService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AuthController {
 
-    private final AuthService authService;
+    private final AuthenticationService authenticationService;
+    private final AuthorizationService authorizationService;
 
-    public AuthController(AuthService authService){
+    public AuthController(AuthenticationService authenticationService, AuthorizationService authorizationService){
         System.out.println("[*] Creation de AuthController");
-        this.authService = authService;
+        this.authenticationService = authenticationService;
+        this.authorizationService = authorizationService;
     }
 
 
     @PostMapping(path="/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate( @RequestBody AuthenticationRequest authRequest ){
         System.out.println("[*] AuthController::authenticate called for user "+authRequest.getIdentifiant());
-        String token = authService.getAuthorizationToken(authRequest.getIdentifiant(), authRequest.getPassword());
+        String token = authenticationService.getAuthorizationToken(authRequest.getIdentifiant(), authRequest.getPassword());
         return ResponseEntity.ok( new AuthenticationResponse(token));
     }
 
     // attend un token d'authentification dans le header Authorization en mode Bearer
     // retourne le nom d'utilisateur associé au token
-    /*
-    public ResponseBody authorize(){
+    @PostMapping(path="/authorize")
+    public ResponseEntity<AuthorizationResponse> authorize(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization){
+        System.out.println(authorization); // Bearer q7Q1VTZzSu9By9IjRD77opq7YUm2A4C0d4DOq5c8toi887ttagVL9d0OrmCofg6p
+
+        String token = this.authorizationService.extractToken(authorization);
+        String username = this.authorizationService.getUser(token);
+        return ResponseEntity.ok( new AuthorizationResponse(username));
     }
-    */
+
 
 }
