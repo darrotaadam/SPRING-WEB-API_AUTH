@@ -1,7 +1,0 @@
-package imt.fisa.auth.exception;
-
-public class ExpiredTokenException extends RuntimeException {
-    public ExpiredTokenException(String message) {
-        super(message);
-    }
-}

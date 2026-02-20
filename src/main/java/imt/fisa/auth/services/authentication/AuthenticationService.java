@@ -1,7 +1,7 @@
 package imt.fisa.auth.services.authentication;
 
 
-import imt.fisa.auth.exception.InvalidCredentialsException;
+import imt.fisa.auth.exception.UnauthorizedException;
 import imt.fisa.auth.persistence.dto.UserEntity;
 import imt.fisa.auth.persistence.repositories.UserRepository;
 import imt.fisa.auth.services.crypto.TokenService;
@@ -30,7 +30,7 @@ public class AuthenticationService {
         Optional<UserEntity> mayberUser = userRepository.findByIdentifiantAndPassword(identifiant, password);
         if(mayberUser.isEmpty()){
             System.out.println("[!] AuthService::getAuthorizationToken invalid credentials for user "+identifiant);
-            throw new InvalidCredentialsException("Identifiant ou password incorrect.");
+            throw new UnauthorizedException("Identifiant ou password incorrect.");
         }
 
         UserEntity user = mayberUser.get();

@@ -12,13 +12,23 @@ services:
     ports:
       - "27017:27017"
     restart: on-failure
+    networks:
+      - gatcha-lan
 
   api-auth:
     build: ../
     container_name: api-auth
     ports:
       - "8080:8080"
-
+    networks:
+      - gatcha-lan
 
 volumes:
   mongo-auth:
+
+
+
+networks:
+  gatcha-lan:
+    external: true
+

@@ -1,13 +1,18 @@
 package imt.fisa.auth.persistence.dto;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "users")
+@Document(collection = "User")
 public class UserEntity {
     @MongoId
+    private ObjectId id;
+
+    @Indexed(unique = true)
     private String identifiant;
     private String password;
     private String token;

@@ -1,0 +1,7 @@
+package imt.fisa.auth.exception;
+
+public class UnauthorizedException extends RuntimeException{
+    public UnauthorizedException(String message) {
+        super(message);
+    }
+}

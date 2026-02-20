@@ -3,24 +3,24 @@ package imt.fisa.auth.controllers.httpdto;
 
 
 public class AuthorizationResponse {
-    private String username;
+    private String identifiant;
     private String error;
 
     public AuthorizationResponse(String username){
-        this.username = username;
+        this.identifiant = username;
     }
-    public AuthorizationResponse(String username, String error){
-        this.username = username;
+    public AuthorizationResponse(String identifiant, String error){
+        this.identifiant = identifiant;
         this.error = error;
     }
 
 
-    public String getUsername() {
-        return username;
+    public String getIdentifiant() {
+        return identifiant;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setIdentifiant(String identifiant) {
+        this.identifiant = identifiant;
     }
 
     public String getError() {

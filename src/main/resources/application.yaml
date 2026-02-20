@@ -9,6 +9,7 @@ spring:
       password: passadmin
       authentication-database: admin
       database: authdb
+      auto-index-creation: true
   profiles:
     active: docker
 

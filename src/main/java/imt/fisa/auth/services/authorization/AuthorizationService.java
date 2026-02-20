@@ -1,7 +1,6 @@
 package imt.fisa.auth.services.authorization;
 
-import imt.fisa.auth.exception.ExpiredTokenException;
-import imt.fisa.auth.exception.InvalidCredentialsException;
+import imt.fisa.auth.exception.UnauthorizedException;
 import imt.fisa.auth.persistence.dto.UserEntity;
 import imt.fisa.auth.persistence.repositories.UserRepository;
 import imt.fisa.auth.services.crypto.TokenService;
@@ -23,7 +22,7 @@ public class AuthorizationService {
     public String extractToken(String authorizationHeader){
         String[] parts = authorizationHeader.split("\\ ");
         if(parts.length !=2 || !parts[0].equals("Bearer")){
-            throw new InvalidCredentialsException("Bearer token must be provided in Authorization header.");
+            throw new UnauthorizedException("Bearer token must be provided in Authorization header.");
         }
         return parts[1];
     }
@@ -32,13 +31,13 @@ public class AuthorizationService {
     public String getUser(String token){
         Optional<UserEntity> maybeUser = userRepository.findByToken(token);
         if(maybeUser.isEmpty()){
-            throw new ExpiredTokenException("Token is unknown.");
+            throw new UnauthorizedException("Token is unknown.");
         }
 
         UserEntity user = maybeUser.get();
 
         if(! tokenService.isTokenValid(token, user)){
-            throw new ExpiredTokenException("Token is expired. You can request a new one at /authenticate by providing identifiant and password json parameters");
+            throw new UnauthorizedException("Token is expired. You can request a new one at /authenticate by providing identifiant and password json parameters");
         }
 
         user.setTokenExpirationTime(LocalDateTime.now().plusHours(1));

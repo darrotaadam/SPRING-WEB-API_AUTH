@@ -1,6 +1,7 @@
 package imt.fisa.auth.services.crypto;
 
 
+import imt.fisa.auth.exception.InternalServerErrorException;
 import imt.fisa.auth.persistence.dto.UserEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class TokenService {
             byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
             return java.util.Base64.getEncoder().encodeToString(encryptedBytes);
         }catch(Exception e){
-            throw new RuntimeException("Erreur lors du chiffrement du token d'authorisation." + e.getMessage());
+            throw new InternalServerErrorException("Erreur lors du chiffrement du token d'authorisation." + e.getMessage());
         }
     }
 
@@ -44,7 +45,7 @@ public class TokenService {
             byte[] decryptedBytes = cipher.doFinal(decodedBytes);
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         }catch(Exception e){
-            throw new RuntimeException("Erreur lors du déchiffrement du token d'authorisation." + e.getMessage());
+            throw new InternalServerErrorException("Erreur lors du déchiffrement du token d'authorisation." + e.getMessage());
         }
     }
 
