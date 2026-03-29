@@ -33,7 +33,7 @@ public class AuthController {
     // retourne le nom d'utilisateur associé au token
     @PostMapping(path="/authorize")
     public ResponseEntity<AuthorizationResponse> authorize(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization){
-        System.out.println(authorization); // Bearer q7Q1VTZzSu9By9IjRD77opq7YUm2A4C0d4DOq5c8toi887ttagVL9d0OrmCofg6p
+        System.out.println(authorization); 
 
         String token = this.authorizationService.extractToken(authorization);
         String username = this.authorizationService.getUser(token);
