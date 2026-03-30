@@ -9,4 +9,10 @@ spring:
       password: passadmin
       authentication-database: admin
       database: authdb
+      auto-index-creation: true
+  profiles:
+    active: docker
 
+auth:
+  token:
+    secret: ${AUTH_TOKEN_AES256_KEY}
