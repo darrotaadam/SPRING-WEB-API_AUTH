@@ -1,3 +1,10 @@
+# pas reussi a faire marcher ça donc j'autorise tout pour le moment
+#cors:
+#  allowed-origins:
+#    - "http://localhost:8080"
+#    - "http://localhost:8081"
+#    - "http://localhost:8083"
+
 spring:
   application:
     name: auth
