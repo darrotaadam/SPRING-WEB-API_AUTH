@@ -1,6 +1,7 @@
 package imt.fisa.auth.services.authentication;
 
 
+import imt.fisa.auth.exception.InternalServerErrorException;
 import imt.fisa.auth.exception.UnauthorizedException;
 import imt.fisa.auth.persistence.dto.UserEntity;
 import imt.fisa.auth.persistence.repositories.UserRepository;
@@ -45,6 +46,21 @@ public class AuthenticationService {
 
 
 
+
+
+    public void register(String identifiant, String password){
+        //enregistre un nouvel utilisateur dans la base de données
+        System.out.println("[*] AuthService::register called for user "+identifiant);
+        Optional<UserEntity> mayberUser = userRepository.findByIdentifiant(identifiant);
+        if(mayberUser.isPresent()){
+            System.out.println("[!] AuthService::register user already exists with identifiant "+identifiant);
+            throw new InternalServerErrorException("Un utilisateur avec cet identifiant existe déjà.");
+        }
+        UserEntity newUser = new UserEntity();
+        newUser.setIdentifiant(identifiant);
+        newUser.setPassword(password);
+        userRepository.save(newUser);
+    }
 
 
 

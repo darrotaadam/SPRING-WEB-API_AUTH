@@ -1,8 +1,6 @@
 package imt.fisa.auth.controllers;
 
-import imt.fisa.auth.controllers.httpdto.AuthenticationRequest;
-import imt.fisa.auth.controllers.httpdto.AuthenticationResponse;
-import imt.fisa.auth.controllers.httpdto.AuthorizationResponse;
+import imt.fisa.auth.controllers.httpdto.*;
 import imt.fisa.auth.services.authentication.AuthenticationService;
 import imt.fisa.auth.services.authorization.AuthorizationService;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +19,13 @@ public class AuthController {
         this.authorizationService = authorizationService;
     }
 
+
+    @PostMapping(path="/register")
+    public ResponseEntity<RegisterResponse>register( @RequestBody RegisterRequest registerRequest ){
+        System.out.println("[*] AuthController::register called for user " + registerRequest.getIdentifiant());
+        this.authenticationService.register(registerRequest.getIdentifiant(), registerRequest.getPassword());
+        return ResponseEntity.ok(new RegisterResponse("L'utilisateur a été enregistré avec succès", registerRequest.getIdentifiant()));
+    }
 
     @PostMapping(path="/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate( @RequestBody AuthenticationRequest authRequest ){
